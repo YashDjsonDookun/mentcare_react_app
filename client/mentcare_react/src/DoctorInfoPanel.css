@@ -1,0 +1,39 @@
+.doctor-info-panel {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.doctor-info-panel h1 {
+    font-size: 2.5rem;
+}
+
+.doctorInfo-wraper{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 2vh;
+    flex-wrap: wrap;
+    text-align: center;
+}
+
+.doctorInfo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.doc-property div {
+    display: flex;
+    margin-left: 4vh;
+}
+
+.doc-property div h4{
+    margin-right: 2vh;
+}
+
+.Date {
+    display: flex;
+    flex-direction: column;
+}
