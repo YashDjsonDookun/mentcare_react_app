@@ -22,19 +22,19 @@ export default function CreatePatient(){
 			method: 'post',
 			url: 'http://localhost:5000/createPatient',
 			data: {
-				firstName:"Yash",
-				lastName:"Dookun",
-				email:"dookun88@gmail.com",
-				address:"Ave, Swami Vivekananda, Clairfonds No.3, Vacoas",
-				DOB:"01/11/1999",
-				phoneNumber:"57522027",
-				gender:"MALE",
-				assignedDoctor:"Dr. Mouse, Mickey",
-				Conditions:"Brain Damage",
-				Treatments:"Panadol",
-				selfharm_violence:"NO",
-				vip:"NO",
-				classified:"NO"
+				firstName:"",
+				lastName:"",
+				email:"",
+				address:"",
+				DOB:"",
+				phoneNumber:"",
+				gender:"",
+				assignedDoctor:"",
+				Conditions:"",
+				Treatments:"",
+				selfharm_violence:"",
+				vip:"",
+				classified:""
 			}
 		})
 	}
