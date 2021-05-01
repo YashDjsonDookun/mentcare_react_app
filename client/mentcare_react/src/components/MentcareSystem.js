@@ -7,6 +7,7 @@ export default function MentcareSystem({doc}) {
     return (
         <div>
             <DoctorPatientPanel docInfo={doc}/>
+            <CreatePatient />
         </div>
     )
 }

@@ -25,7 +25,7 @@ export default function DoctorLogin ({setDoc}){
                     Enter Your Doctor ID:
                 </Header>
                 <Form size='large'>
-                    <Segment stacked>
+                    <Segment raised>
                         <Form.Input onChange={e => setId(e.target.value)} fluid icon='user' type="number" required iconPosition='left' placeholder='e.g, 6969696' value={id?id:""} />
                         <Button onClick={validateDocID} color='teal' fluid size='large'>
                             Login

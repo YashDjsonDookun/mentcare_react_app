@@ -3,16 +3,19 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const morgan = require('morgan');
+const bodyParser = require('body-parser')
 const PORT = 5000 || process.env.PORT;
 const db = require('monk')(process.env.DB_URL)
-
 const Doctors = db.get("Doctors")
+const Patients = db.get("Patients")
 
 app.use(morgan('dev'));
 app.use(cors())
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json())
 
 app.get('/', function(req, res){
-    res.send("Mentcare");
+    res.send("Mentcare API");
 });
 
 app.get('/fetchDocs/:doctorID', function(req, res){
@@ -38,10 +41,10 @@ app.get('/fetchDocs', function(req, res){
     })
 });
 
-app.use(function (err, req, res, next) {
-  console.error(err.stack)
-  res.status(500).send('Something broke!')
-})
+app.post('/createPatient', function(req, res){
+	res.send(req.body)
+	//Patients.insert(req.body)
+});
 
 app.listen(PORT, ()=>{
     console.log(`Listening on http://localhost:${PORT}`);
