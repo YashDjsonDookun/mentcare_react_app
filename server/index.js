@@ -40,9 +40,9 @@ app.get('/fetchDocs', function(req, res){
     })
 });
 
-app.get('/fetchPatients/:id', function(req, res){
-	const patientId= req.params.pid;
-    patients = Patients.findOne({"pid" : patientId}).then((patient) => {
+app.get('/fetchPatients/:_id', function(req, res){
+	const patientId = req.params._id;
+    patients = Patients.findOne({"_id" : patientId}).then((patient) => {
         if (!patient){
             res.status(500).send('Patient not found in database!')
         }
