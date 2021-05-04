@@ -115,8 +115,6 @@ export default function CreatePatient(props){
 						  placeholder='Phone Number'
 						  type='number'
 						  required
-						  min="7"
-						  max="8"
 						  name="phoneNumber"
 						/>
 
