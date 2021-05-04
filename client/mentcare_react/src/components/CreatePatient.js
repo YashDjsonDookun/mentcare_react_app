@@ -1,8 +1,8 @@
-import React from 'react'
+import { React, useState } from 'react'
 import { Button, Form, Message, Segment, Header } from 'semantic-ui-react'
 const axios = require('axios');
 
-export default function CreatePatient(){
+export default function CreatePatient(props){
 	const genderOptions = [
 	  { key: 'm', text: 'MALE', value: 'MALE' },
 	  { key: 'f', text: 'FEMALE', value: 'FEMALE' },
@@ -17,31 +17,52 @@ export default function CreatePatient(){
 	  { key: 'c', text: 'CLASSIFIED', value: 'CLASSIFIED' },
 	]
 
-	async function testFunc(){
+	const [gender, setGender] = useState();
+	const [selfHarm_violence, setSelfHarm_violence] = useState();
+	const [vipClassified, setVipClassified] = useState();
+
+	async function createPatient (e) {
+		e.preventDefault();
+		let vip = "";
+		let classified = "";
+		if(vipClassified === "N/A"){
+			vip = false
+			classified = false
+		}
+		else if (vipClassified === "VIP") {
+			vip = true;
+			classified = false;
+		}
+		else{
+			vip = true;
+			classified = true;
+		}
 		await axios({
 			method: 'post',
 			url: 'http://localhost:5000/createPatient',
 			data: {
-				firstName:"",
-				lastName:"",
-				email:"",
-				address:"",
-				DOB:"",
-				phoneNumber:"",
-				gender:"",
-				assignedDoctor:"",
-				Conditions:"",
-				Treatments:"",
-				selfharm_violence:"",
-				vip:"",
-				classified:""
+				firstName: e.target.firstName.value,
+				lastName:e.target.lastName.value,
+				email:e.target.email.value,
+				address:e.target.address.value,
+				DOB:e.target.DOB.value,
+				phoneNumber:e.target.phoneNumber.value,
+				gender:gender,
+				assignedDoctor: e.target.assignedDoctor.value,
+				conditions:e.target.conditions.value,
+				treatments:e.target.treatments.value,
+				selfharm_violence:selfHarm_violence,
+				vip: vip,
+				classified:classified,
+				created_at: new Date().toLocaleDateString() +" "+ new Date().toLocaleTimeString(),
+				last_consultation: new Date().toLocaleDateString() +" "+ new Date().toLocaleTimeString()
 			}
 		})
 	}
 
 	return(
 		<div>
-		    <Form className='attached fluid segment'>
+		    <Form className='attached fluid segment' onSubmit = {createPatient}>
 				<Form.Group widths='equal'>
 					<Segment raised>
 						<Header as='h2' color='teal' textAlign='center'>
@@ -53,6 +74,7 @@ export default function CreatePatient(){
 						  placeholder='First Name'
 						  type='text'
 						  required
+						  name= "firstName"
 						/>
 						<Form.Input
 						  fluid
@@ -60,6 +82,7 @@ export default function CreatePatient(){
 						  placeholder='Last Name'
 						  type='text'
 						  required
+						  name="lastName"
 						/>
 						<Form.Input
 						  fluid
@@ -67,6 +90,7 @@ export default function CreatePatient(){
 						  placeholder='Email'
 						  type='email'
 						  required
+						  name="email"
 						/>
 
 						<Form.Input
@@ -75,6 +99,7 @@ export default function CreatePatient(){
 						  placeholder='Address'
 						  type='text'
 						  required
+						  name="address"
 						/>
 						<Form.Input
 						  fluid
@@ -82,13 +107,17 @@ export default function CreatePatient(){
 						  placeholder='Last Name'
 						  type='date'
 						  required
+						  name="DOB"
 						/>
 						<Form.Input
 						  fluid
 						  label='Phone Number'
 						  placeholder='Phone Number'
-						  type='bumber'
+						  type='number'
 						  required
+						  min="7"
+						  max="8"
+						  name="phoneNumber"
 						/>
 
 						<Form.Select
@@ -97,6 +126,7 @@ export default function CreatePatient(){
 				            options={genderOptions}
 				            placeholder='Gender'
 				            required
+							onChange = {(e) => setGender(e.target.textContent)}
 				          />
 						<Form.Input
 						  fluid
@@ -104,6 +134,8 @@ export default function CreatePatient(){
 						  placeholder=''
 						  type='text'
 						  readOnly
+						  name="assignedDoctor"
+						  value={"Dr. " + props.docInfo.lastName + ", " + props.docInfo.firstName}
 						/>
 						<Form.Input
 						  fluid
@@ -111,6 +143,7 @@ export default function CreatePatient(){
 						  placeholder='Conditions'
 						  type='text'
 						  required
+						  name="conditions"
 						/>
 
 						<Form.Input
@@ -119,6 +152,7 @@ export default function CreatePatient(){
 						  placeholder='Treatments'
 						  type='text'
 						  required
+						  name="treatments"
 						/>
 						<Form.Select
 				            fluid
@@ -126,6 +160,8 @@ export default function CreatePatient(){
 				            options={selfHarm_violenceOptions}
 				            placeholder='History Of Self-Harm or Violence?'
 				            required
+							name="selfharm_violence"
+							onChange = {(e) => setSelfHarm_violence(e.target.textContent)}
 				          />
 						<Form.Select
 				            fluid
@@ -133,10 +169,12 @@ export default function CreatePatient(){
 				            options={vip_classifiedOptions}
 				            placeholder='VIP or Classifieds'
 				            required
+							name="vip_classified"
+							onChange = {(e) => setVipClassified(e.target.textContent)}
 				          />
 			          </Segment>
 				</Form.Group>
-		      <Button onClick={testFunc} color='teal'>Submit</Button>
+		      <Button type="submit" color='teal'>Submit</Button>
 			</Form>
 	 	 </div>
 	)

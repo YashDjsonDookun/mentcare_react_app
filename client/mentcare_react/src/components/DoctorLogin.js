@@ -14,7 +14,6 @@ export default function DoctorLogin ({setDoc}){
         .catch(error=>{
             setMessage("floating");
             setId("");
-            throw(error)
         })
     }
 

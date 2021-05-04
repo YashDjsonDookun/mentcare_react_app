@@ -29,22 +29,22 @@ app.get('/fetchDocs/:doctorID', function(req, res){
     })
 });
 
-app.get('/fetchDocs', function(req, res){
-    doctors = Doctors.find({}).then((docs) => {
-        if (!docs){
-            res.status(500).send('Oops, Somthing Happened!')
-        }
-        else{
-            res.send(docs);
-        }
-    })
-});
-
 app.get('/fetchPatients/:_id', function(req, res){
 	const patientId = req.params._id;
     patients = Patients.findOne({"_id" : patientId}).then((patient) => {
         if (!patient){
-            res.status(500).send('Patient not found in database!')
+            res.setStatus.send('Patient not found in database!')
+        }
+        else{
+            res.send(patient);
+        }
+    })
+});
+
+app.get('/fetchPatients', function(req, res){
+    patients = Patients.find({}).then((patient) => {
+        if (!patient){
+            res.status(500).send('Oops, Something Happened!')
         }
         else{
             res.send(patient);
@@ -53,8 +53,13 @@ app.get('/fetchPatients/:_id', function(req, res){
 });
 
 app.post('/createPatient', function(req, res){
-	res.send(req.body)
-	//Patients.insert(req.body)
+	try{
+	    Patients.insert(req.body)
+        res.status(200).send("Patient Created")
+    }
+    catch (error){
+        res.status(500).send('Oops, Something Happened!');
+    }
 });
 
 app.listen(PORT, ()=>{
