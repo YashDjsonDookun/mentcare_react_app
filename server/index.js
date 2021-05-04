@@ -17,6 +17,7 @@ app.get('/', function(req, res){
     res.send("Mentcare API");
 });
 
+// fetch doctor by id
 app.get('/fetchDocs/:doctorID', function(req, res){
     const docID = req.params.doctorID;
     doctors = Doctors.findOne({"doctorID" : docID}).then((doc) => {
@@ -29,6 +30,8 @@ app.get('/fetchDocs/:doctorID', function(req, res){
     })
 });
 
+
+// fetch patient by id
 app.get('/fetchPatients/:_id', function(req, res){
 	const patientId = req.params._id;
     patients = Patients.findOne({"_id" : patientId}).then((patient) => {
@@ -41,6 +44,7 @@ app.get('/fetchPatients/:_id', function(req, res){
     })
 });
 
+// fetch all patients
 app.get('/fetchPatients', function(req, res){
     patients = Patients.find({}).then((patient) => {
         if (!patient){
@@ -52,6 +56,7 @@ app.get('/fetchPatients', function(req, res){
     })
 });
 
+// create new patient
 app.post('/createPatient', function(req, res){
 	try{
 	    Patients.insert(req.body)
